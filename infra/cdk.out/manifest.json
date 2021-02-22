@@ -1,0 +1,189 @@
+{
+  "version": "9.0.0",
+  "artifacts": {
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    },
+    "s3-stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "s3-stack.template.json"
+      },
+      "metadata": {
+        "/s3-stack/artifact-bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "artifactbucket134E2AA7",
+            "trace": [
+              "new Bucket (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/aws-s3/lib/bucket.js:521:26)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:58",
+              "Kernel._wrapSandboxCode (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3148:24)",
+              "Kernel._create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:34)",
+              "Kernel.create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2461:29)",
+              "KernelHost.processRequest (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9457:36)",
+              "KernelHost.run (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9420:22)",
+              "Immediate._onImmediate (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9421:46)",
+              "processImmediate (internal/timers.js:456:21)"
+            ]
+          }
+        ],
+        "/s3-stack/s3-build-artifacts-export": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "s3buildartifactsexport",
+            "trace": [
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:58",
+              "Kernel._wrapSandboxCode (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3148:24)",
+              "Kernel._create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:34)",
+              "Kernel.create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2461:29)",
+              "KernelHost.processRequest (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9457:36)",
+              "KernelHost.run (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9420:22)",
+              "Immediate._onImmediate (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9421:46)",
+              "processImmediate (internal/timers.js:456:21)"
+            ]
+          }
+        ],
+        "/s3-stack/artifacts-bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "artifactsbucket49DAC999",
+            "trace": [
+              "new StringParameter (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/aws-ssm/lib/parameter.js:98:26)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:58",
+              "Kernel._wrapSandboxCode (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3148:24)",
+              "Kernel._create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:34)",
+              "Kernel.create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2461:29)",
+              "KernelHost.processRequest (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9457:36)",
+              "KernelHost.run (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9420:22)",
+              "Immediate._onImmediate (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9421:46)",
+              "processImmediate (internal/timers.js:456:21)"
+            ]
+          }
+        ],
+        "/s3-stack/frontend/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "frontend0151CE44",
+            "trace": [
+              "new Bucket (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/aws-s3/lib/bucket.js:521:26)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:58",
+              "Kernel._wrapSandboxCode (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3148:24)",
+              "Kernel._create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:34)",
+              "Kernel.create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2461:29)",
+              "KernelHost.processRequest (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9457:36)",
+              "KernelHost.run (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9420:22)",
+              "Immediate._onImmediate (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9421:46)",
+              "processImmediate (internal/timers.js:456:21)"
+            ]
+          }
+        ],
+        "/s3-stack/frontend/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "frontendPolicy45CFD7B8",
+            "trace": [
+              "new BucketPolicy (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/aws-s3/lib/bucket-policy.js:32:25)",
+              "Bucket.addToResourcePolicy (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/aws-s3/lib/bucket.js:134:27)",
+              "Function.addToPrincipalOrResource (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/aws-iam/lib/grant.js:70:49)",
+              "Bucket.grantPublicAccess (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/aws-s3/lib/bucket.js:349:26)",
+              "new Bucket (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/aws-s3/lib/bucket.js:568:18)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:58",
+              "Kernel._wrapSandboxCode (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3148:24)",
+              "Kernel._create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:34)",
+              "Kernel.create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2461:29)",
+              "KernelHost.processRequest (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9457:36)",
+              "KernelHost.run (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9420:22)",
+              "Immediate._onImmediate (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9421:46)",
+              "processImmediate (internal/timers.js:456:21)"
+            ]
+          }
+        ],
+        "/s3-stack/frontend-bucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "frontendbucketB23FFB46",
+            "trace": [
+              "new StringParameter (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/aws-ssm/lib/parameter.js:98:26)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:58",
+              "Kernel._wrapSandboxCode (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3148:24)",
+              "Kernel._create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:34)",
+              "Kernel.create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2461:29)",
+              "KernelHost.processRequest (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9457:36)",
+              "KernelHost.run (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9420:22)",
+              "Immediate._onImmediate (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9421:46)",
+              "processImmediate (internal/timers.js:456:21)"
+            ]
+          }
+        ],
+        "/s3-stack/frontend-bucket-export": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "frontendbucketexport",
+            "trace": [
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:58",
+              "Kernel._wrapSandboxCode (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3148:24)",
+              "Kernel._create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2720:34)",
+              "Kernel.create (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2461:29)",
+              "KernelHost.processRequest (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9457:36)",
+              "KernelHost.run (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9420:22)",
+              "Immediate._onImmediate (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9421:46)",
+              "processImmediate (internal/timers.js:456:21)"
+            ]
+          }
+        ],
+        "/s3-stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata",
+            "trace": [
+              "new MetadataResource (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/metadata-resource.js:22:30)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:127:9",
+              "visit (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:181:9)",
+              "visit (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:178:9)",
+              "injectMetadataResources (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:116:5)",
+              "Object.synthesize (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:16:5)",
+              "App.synth (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/stage.js:100:41)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2536:134",
+              "Kernel._wrapSandboxCode (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3148:24)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2536:107",
+              "Kernel._ensureSync (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3129:28)",
+              "Kernel.invoke (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2536:34)",
+              "KernelHost.processRequest (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9457:36)",
+              "KernelHost.run (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9420:22)",
+              "Immediate._onImmediate (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9421:46)",
+              "processImmediate (internal/timers.js:456:21)"
+            ]
+          }
+        ],
+        "/s3-stack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable",
+            "trace": [
+              "new MetadataResource (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/metadata-resource.js:30:35)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:127:9",
+              "visit (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:181:9)",
+              "visit (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:178:9)",
+              "injectMetadataResources (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:116:5)",
+              "Object.synthesize (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/private/synthesis.js:16:5)",
+              "App.synth (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/jsii-kernel-piKcM1/node_modules/@aws-cdk/core/lib/stage.js:100:41)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2536:134",
+              "Kernel._wrapSandboxCode (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3148:24)",
+              "/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2536:107",
+              "Kernel._ensureSync (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:3129:28)",
+              "Kernel.invoke (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:2536:34)",
+              "KernelHost.processRequest (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9457:36)",
+              "KernelHost.run (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9420:22)",
+              "Immediate._onImmediate (/private/var/folders/4f/6j71w69j3g3_8_mdnlxfl85m0000gr/T/tmpr0yg6sqs/lib/program.js:9421:46)",
+              "processImmediate (internal/timers.js:456:21)"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

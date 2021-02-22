@@ -1,0 +1,262 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "App",
+    "path": "",
+    "children": {
+      "Tree": {
+        "id": "Tree",
+        "path": "Tree",
+        "constructInfo": {
+          "fqn": "@aws-cdk/core.Construct",
+          "version": "1.90.1"
+        }
+      },
+      "s3-stack": {
+        "id": "s3-stack",
+        "path": "s3-stack",
+        "children": {
+          "artifact-bucket": {
+            "id": "artifact-bucket",
+            "path": "s3-stack/artifact-bucket",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "s3-stack/artifact-bucket/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {
+                    "accessControl": "BucketOwnerFullControl",
+                    "bucketEncryption": {
+                      "serverSideEncryptionConfiguration": [
+                        {
+                          "serverSideEncryptionByDefault": {
+                            "sseAlgorithm": "AES256"
+                          }
+                        }
+                      ]
+                    },
+                    "publicAccessBlockConfiguration": {
+                      "blockPublicAcls": true,
+                      "blockPublicPolicy": true,
+                      "ignorePublicAcls": true,
+                      "restrictPublicBuckets": true
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-s3.CfnBucket",
+                  "version": "1.90.1"
+                }
+              },
+              "Notifications": {
+                "id": "Notifications",
+                "path": "s3-stack/artifact-bucket/Notifications",
+                "constructInfo": {
+                  "fqn": "@aws-cdk/core.Construct",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-s3.Bucket",
+              "version": "1.90.1"
+            }
+          },
+          "s3-build-artifacts-export": {
+            "id": "s3-build-artifacts-export",
+            "path": "s3-stack/s3-build-artifacts-export",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.CfnOutput",
+              "version": "1.90.1"
+            }
+          },
+          "artifacts-bucket": {
+            "id": "artifacts-bucket",
+            "path": "s3-stack/artifacts-bucket",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "s3-stack/artifacts-bucket/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Ref": "artifactbucket134E2AA7"
+                    },
+                    "name": "/dev/artifacts-bucket-name"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-ssm.CfnParameter",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-ssm.StringParameter",
+              "version": "1.90.1"
+            }
+          },
+          "frontend": {
+            "id": "frontend",
+            "path": "s3-stack/frontend",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "s3-stack/frontend/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
+                  "aws:cdk:cloudformation:props": {
+                    "accessControl": "BucketOwnerFullControl",
+                    "websiteConfiguration": {
+                      "indexDocument": "index.html",
+                      "errorDocument": "error.html"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-s3.CfnBucket",
+                  "version": "1.90.1"
+                }
+              },
+              "Notifications": {
+                "id": "Notifications",
+                "path": "s3-stack/frontend/Notifications",
+                "constructInfo": {
+                  "fqn": "@aws-cdk/core.Construct",
+                  "version": "1.90.1"
+                }
+              },
+              "Policy": {
+                "id": "Policy",
+                "path": "s3-stack/frontend/Policy",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "s3-stack/frontend/Policy/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::S3::BucketPolicy",
+                      "aws:cdk:cloudformation:props": {
+                        "bucket": {
+                          "Ref": "frontend0151CE44"
+                        },
+                        "policyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "s3:GetObject",
+                              "Effect": "Allow",
+                              "Principal": "*",
+                              "Resource": {
+                                "Fn::Join": [
+                                  "",
+                                  [
+                                    {
+                                      "Fn::GetAtt": [
+                                        "frontend0151CE44",
+                                        "Arn"
+                                      ]
+                                    },
+                                    "/*"
+                                  ]
+                                ]
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-s3.CfnBucketPolicy",
+                      "version": "1.90.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-s3.BucketPolicy",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-s3.Bucket",
+              "version": "1.90.1"
+            }
+          },
+          "frontend-bucket": {
+            "id": "frontend-bucket",
+            "path": "s3-stack/frontend-bucket",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "s3-stack/frontend-bucket/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": {
+                      "Ref": "frontend0151CE44"
+                    },
+                    "name": "/dev/frontend-bucket-name"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-ssm.CfnParameter",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-ssm.StringParameter",
+              "version": "1.90.1"
+            }
+          },
+          "frontend-bucket-export": {
+            "id": "frontend-bucket-export",
+            "path": "s3-stack/frontend-bucket-export",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.CfnOutput",
+              "version": "1.90.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "s3-stack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "s3-stack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "@aws-cdk/core.CfnResource",
+                  "version": "1.90.1"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "s3-stack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "@aws-cdk/core.CfnCondition",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.Construct",
+              "version": "1.90.1"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "@aws-cdk/core.Stack",
+          "version": "1.90.1"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "@aws-cdk/core.App",
+      "version": "1.90.1"
+    }
+  }
+}
