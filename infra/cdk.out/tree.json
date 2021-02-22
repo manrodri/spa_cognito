@@ -252,6 +252,708 @@
           "fqn": "@aws-cdk/core.Stack",
           "version": "1.90.1"
         }
+      },
+      "frontend-pipeline-stack": {
+        "id": "frontend-pipeline-stack",
+        "path": "frontend-pipeline-stack",
+        "children": {
+          "webhosting-id": {
+            "id": "webhosting-id",
+            "path": "frontend-pipeline-stack/webhosting-id",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.Resource",
+              "version": "1.90.1"
+            }
+          },
+          "artifact-bucket-id": {
+            "id": "artifact-bucket-id",
+            "path": "frontend-pipeline-stack/artifact-bucket-id",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.Resource",
+              "version": "1.90.1"
+            }
+          },
+          "buildfrontend": {
+            "id": "buildfrontend",
+            "path": "frontend-pipeline-stack/buildfrontend",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "frontend-pipeline-stack/buildfrontend/Role",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "frontend-pipeline-stack/buildfrontend/Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "codebuild.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        },
+                        "managedPolicyArns": [
+                          {
+                            "Fn::Join": [
+                              "",
+                              [
+                                "arn:",
+                                {
+                                  "Ref": "AWS::Partition"
+                                },
+                                ":iam::aws:policy/AdministratorAccess"
+                              ]
+                            ]
+                          }
+                        ]
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-iam.CfnRole",
+                      "version": "1.90.1"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "frontend-pipeline-stack/buildfrontend/Role/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "frontend-pipeline-stack/buildfrontend/Role/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "s3:GetObject*",
+                                    "s3:GetBucket*",
+                                    "s3:List*",
+                                    "s3:DeleteObject*",
+                                    "s3:PutObject",
+                                    "s3:Abort*"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "arn:",
+                                          {
+                                            "Ref": "AWS::Partition"
+                                          },
+                                          ":s3:::",
+                                          {
+                                            "Fn::ImportValue": "build-artifacts-bucket"
+                                          }
+                                        ]
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "arn:",
+                                          {
+                                            "Ref": "AWS::Partition"
+                                          },
+                                          ":s3:::",
+                                          {
+                                            "Fn::ImportValue": "build-artifacts-bucket"
+                                          },
+                                          "/*"
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Action": [
+                                    "logs:CreateLogGroup",
+                                    "logs:CreateLogStream",
+                                    "logs:PutLogEvents"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "arn:",
+                                          {
+                                            "Ref": "AWS::Partition"
+                                          },
+                                          ":logs:eu-west-1:",
+                                          {
+                                            "Ref": "AWS::AccountId"
+                                          },
+                                          ":log-group:/aws/codebuild/",
+                                          {
+                                            "Ref": "buildfrontendC2BD8F2D"
+                                          }
+                                        ]
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "arn:",
+                                          {
+                                            "Ref": "AWS::Partition"
+                                          },
+                                          ":logs:eu-west-1:",
+                                          {
+                                            "Ref": "AWS::AccountId"
+                                          },
+                                          ":log-group:/aws/codebuild/",
+                                          {
+                                            "Ref": "buildfrontendC2BD8F2D"
+                                          },
+                                          ":*"
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Action": [
+                                    "codebuild:CreateReportGroup",
+                                    "codebuild:CreateReport",
+                                    "codebuild:UpdateReport",
+                                    "codebuild:BatchPutTestCases",
+                                    "codebuild:BatchPutCodeCoverages"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::Join": [
+                                      "",
+                                      [
+                                        "arn:",
+                                        {
+                                          "Ref": "AWS::Partition"
+                                        },
+                                        ":codebuild:eu-west-1:",
+                                        {
+                                          "Ref": "AWS::AccountId"
+                                        },
+                                        ":report-group/",
+                                        {
+                                          "Ref": "buildfrontendC2BD8F2D"
+                                        },
+                                        "-*"
+                                      ]
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "buildfrontendRoleDefaultPolicy140087A7",
+                            "roles": [
+                              {
+                                "Ref": "buildfrontendRole4A834F0E"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-iam.CfnPolicy",
+                          "version": "1.90.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-iam.Policy",
+                      "version": "1.90.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-iam.Role",
+                  "version": "1.90.1"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "frontend-pipeline-stack/buildfrontend/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::CodeBuild::Project",
+                  "aws:cdk:cloudformation:props": {
+                    "artifacts": {
+                      "type": "CODEPIPELINE"
+                    },
+                    "environment": {
+                      "type": "LINUX_CONTAINER",
+                      "image": "aws/codebuild/standard:3.0",
+                      "imagePullCredentialsType": "CODEBUILD",
+                      "privilegedMode": false,
+                      "computeType": "BUILD_GENERAL1_SMALL"
+                    },
+                    "serviceRole": {
+                      "Fn::GetAtt": [
+                        "buildfrontendRole4A834F0E",
+                        "Arn"
+                      ]
+                    },
+                    "source": {
+                      "type": "CODEPIPELINE",
+                      "buildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"install\": {\n      \"commands\": [\n        \"pip install awscli\"\n      ]\n    },\n    \"pre_build\": {\n      \"commands\": [\n        \"yarn install\"\n      ]\n    },\n    \"build\": {\n      \"commands\": [\n        \"yarn run build\"\n      ]\n    },\n    \"post_build\": {\n      \"commands\": [\n        \"aws cloudfront create-invalidation --distribution-id $distributionid --paths \\\"/*\\\" \"\n      ]\n    }\n  },\n  \"artifacts\": {\n    \"files\": [\n      \"build/**/*\"\n    ]\n  },\n  \"cache\": {\n    \"paths\": [\n      \"./node_modules/**/*\"\n    ]\n  }\n}"
+                    },
+                    "cache": {
+                      "type": "S3",
+                      "location": {
+                        "Fn::Join": [
+                          "/",
+                          [
+                            {
+                              "Fn::ImportValue": "build-artifacts-bucket"
+                            },
+                            "codebuild-cache"
+                          ]
+                        ]
+                      }
+                    },
+                    "description": "frontend project for SPA",
+                    "encryptionKey": "alias/aws/s3",
+                    "name": "BuildFrontend"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-codebuild.CfnProject",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-codebuild.PipelineProject",
+              "version": "1.90.1"
+            }
+          },
+          "frontend-pipeline": {
+            "id": "frontend-pipeline",
+            "path": "frontend-pipeline-stack/frontend-pipeline",
+            "children": {
+              "Role": {
+                "id": "Role",
+                "path": "frontend-pipeline-stack/frontend-pipeline/Role",
+                "children": {
+                  "Resource": {
+                    "id": "Resource",
+                    "path": "frontend-pipeline-stack/frontend-pipeline/Role/Resource",
+                    "attributes": {
+                      "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                      "aws:cdk:cloudformation:props": {
+                        "assumeRolePolicyDocument": {
+                          "Statement": [
+                            {
+                              "Action": "sts:AssumeRole",
+                              "Effect": "Allow",
+                              "Principal": {
+                                "Service": "codepipeline.amazonaws.com"
+                              }
+                            }
+                          ],
+                          "Version": "2012-10-17"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-iam.CfnRole",
+                      "version": "1.90.1"
+                    }
+                  },
+                  "DefaultPolicy": {
+                    "id": "DefaultPolicy",
+                    "path": "frontend-pipeline-stack/frontend-pipeline/Role/DefaultPolicy",
+                    "children": {
+                      "Resource": {
+                        "id": "Resource",
+                        "path": "frontend-pipeline-stack/frontend-pipeline/Role/DefaultPolicy/Resource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                          "aws:cdk:cloudformation:props": {
+                            "policyDocument": {
+                              "Statement": [
+                                {
+                                  "Action": [
+                                    "s3:GetObject*",
+                                    "s3:GetBucket*",
+                                    "s3:List*",
+                                    "s3:DeleteObject*",
+                                    "s3:PutObject",
+                                    "s3:Abort*"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": [
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "arn:",
+                                          {
+                                            "Ref": "AWS::Partition"
+                                          },
+                                          ":s3:::",
+                                          {
+                                            "Fn::ImportValue": "build-artifacts-bucket"
+                                          }
+                                        ]
+                                      ]
+                                    },
+                                    {
+                                      "Fn::Join": [
+                                        "",
+                                        [
+                                          "arn:",
+                                          {
+                                            "Ref": "AWS::Partition"
+                                          },
+                                          ":s3:::",
+                                          {
+                                            "Fn::ImportValue": "build-artifacts-bucket"
+                                          },
+                                          "/*"
+                                        ]
+                                      ]
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Action": "sts:AssumeRole",
+                                  "Effect": "Allow",
+                                  "Resource": {
+                                    "Fn::GetAtt": [
+                                      "frontendpipelineBuildCodePipelineActionRoleA39AF7CA",
+                                      "Arn"
+                                    ]
+                                  }
+                                }
+                              ],
+                              "Version": "2012-10-17"
+                            },
+                            "policyName": "frontendpipelineRoleDefaultPolicyDA92DB0E",
+                            "roles": [
+                              {
+                                "Ref": "frontendpipelineRoleA0D54F2E"
+                              }
+                            ]
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-iam.CfnPolicy",
+                          "version": "1.90.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/aws-iam.Policy",
+                      "version": "1.90.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-iam.Role",
+                  "version": "1.90.1"
+                }
+              },
+              "Resource": {
+                "id": "Resource",
+                "path": "frontend-pipeline-stack/frontend-pipeline/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::CodePipeline::Pipeline",
+                  "aws:cdk:cloudformation:props": {
+                    "roleArn": {
+                      "Fn::GetAtt": [
+                        "frontendpipelineRoleA0D54F2E",
+                        "Arn"
+                      ]
+                    },
+                    "stages": [
+                      {
+                        "name": "Source",
+                        "actions": [
+                          {
+                            "name": "GitHubSource",
+                            "outputArtifacts": [
+                              {
+                                "name": "source"
+                              }
+                            ],
+                            "actionTypeId": {
+                              "category": "Source",
+                              "version": "1",
+                              "owner": "ThirdParty",
+                              "provider": "GitHub"
+                            },
+                            "configuration": {
+                              "Owner": "manrodri",
+                              "Repo": "spa_cognito",
+                              "Branch": "master",
+                              "OAuthToken": "{{resolve:secretsmanager:dev/github-token:SecretString:github-token::}}",
+                              "PollForSourceChanges": false
+                            },
+                            "runOrder": 1
+                          }
+                        ]
+                      },
+                      {
+                        "name": "Build",
+                        "actions": [
+                          {
+                            "name": "Build",
+                            "inputArtifacts": [
+                              {
+                                "name": "source"
+                              }
+                            ],
+                            "outputArtifacts": [
+                              {
+                                "name": "build"
+                              }
+                            ],
+                            "actionTypeId": {
+                              "category": "Build",
+                              "version": "1",
+                              "owner": "AWS",
+                              "provider": "CodeBuild"
+                            },
+                            "configuration": {
+                              "ProjectName": {
+                                "Ref": "buildfrontendC2BD8F2D"
+                              }
+                            },
+                            "runOrder": 1,
+                            "roleArn": {
+                              "Fn::GetAtt": [
+                                "frontendpipelineBuildCodePipelineActionRoleA39AF7CA",
+                                "Arn"
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "artifactStore": {
+                      "type": "S3",
+                      "location": {
+                        "Fn::ImportValue": "build-artifacts-bucket"
+                      }
+                    },
+                    "name": "spa_cognito-dev-frontend-pipeline",
+                    "restartExecutionOnUpdate": false
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-codepipeline.CfnPipeline",
+                  "version": "1.90.1"
+                }
+              },
+              "Source": {
+                "id": "Source",
+                "path": "frontend-pipeline-stack/frontend-pipeline/Source",
+                "children": {
+                  "GitHubSource": {
+                    "id": "GitHubSource",
+                    "path": "frontend-pipeline-stack/frontend-pipeline/Source/GitHubSource",
+                    "children": {
+                      "WebhookResource": {
+                        "id": "WebhookResource",
+                        "path": "frontend-pipeline-stack/frontend-pipeline/Source/GitHubSource/WebhookResource",
+                        "attributes": {
+                          "aws:cdk:cloudformation:type": "AWS::CodePipeline::Webhook",
+                          "aws:cdk:cloudformation:props": {
+                            "authentication": "GITHUB_HMAC",
+                            "authenticationConfiguration": {
+                              "secretToken": "{{resolve:secretsmanager:dev/github-token:SecretString:github-token::}}"
+                            },
+                            "filters": [
+                              {
+                                "jsonPath": "$.ref",
+                                "matchEquals": "refs/heads/{Branch}"
+                              }
+                            ],
+                            "targetAction": "GitHubSource",
+                            "targetPipeline": {
+                              "Ref": "frontendpipelineB0F3910E"
+                            },
+                            "targetPipelineVersion": 1,
+                            "registerWithThirdParty": true
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-codepipeline.CfnWebhook",
+                          "version": "1.90.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/core.Construct",
+                      "version": "1.90.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/core.Construct",
+                  "version": "1.90.1"
+                }
+              },
+              "Build": {
+                "id": "Build",
+                "path": "frontend-pipeline-stack/frontend-pipeline/Build",
+                "children": {
+                  "Build": {
+                    "id": "Build",
+                    "path": "frontend-pipeline-stack/frontend-pipeline/Build/Build",
+                    "children": {
+                      "CodePipelineActionRole": {
+                        "id": "CodePipelineActionRole",
+                        "path": "frontend-pipeline-stack/frontend-pipeline/Build/Build/CodePipelineActionRole",
+                        "children": {
+                          "Resource": {
+                            "id": "Resource",
+                            "path": "frontend-pipeline-stack/frontend-pipeline/Build/Build/CodePipelineActionRole/Resource",
+                            "attributes": {
+                              "aws:cdk:cloudformation:type": "AWS::IAM::Role",
+                              "aws:cdk:cloudformation:props": {
+                                "assumeRolePolicyDocument": {
+                                  "Statement": [
+                                    {
+                                      "Action": "sts:AssumeRole",
+                                      "Effect": "Allow",
+                                      "Principal": {
+                                        "AWS": {
+                                          "Fn::Join": [
+                                            "",
+                                            [
+                                              "arn:",
+                                              {
+                                                "Ref": "AWS::Partition"
+                                              },
+                                              ":iam::",
+                                              {
+                                                "Ref": "AWS::AccountId"
+                                              },
+                                              ":root"
+                                            ]
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  ],
+                                  "Version": "2012-10-17"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "@aws-cdk/aws-iam.CfnRole",
+                              "version": "1.90.1"
+                            }
+                          },
+                          "DefaultPolicy": {
+                            "id": "DefaultPolicy",
+                            "path": "frontend-pipeline-stack/frontend-pipeline/Build/Build/CodePipelineActionRole/DefaultPolicy",
+                            "children": {
+                              "Resource": {
+                                "id": "Resource",
+                                "path": "frontend-pipeline-stack/frontend-pipeline/Build/Build/CodePipelineActionRole/DefaultPolicy/Resource",
+                                "attributes": {
+                                  "aws:cdk:cloudformation:type": "AWS::IAM::Policy",
+                                  "aws:cdk:cloudformation:props": {
+                                    "policyDocument": {
+                                      "Statement": [
+                                        {
+                                          "Action": [
+                                            "codebuild:BatchGetBuilds",
+                                            "codebuild:StartBuild",
+                                            "codebuild:StopBuild"
+                                          ],
+                                          "Effect": "Allow",
+                                          "Resource": {
+                                            "Fn::GetAtt": [
+                                              "buildfrontendC2BD8F2D",
+                                              "Arn"
+                                            ]
+                                          }
+                                        }
+                                      ],
+                                      "Version": "2012-10-17"
+                                    },
+                                    "policyName": "frontendpipelineBuildCodePipelineActionRoleDefaultPolicy8176B099",
+                                    "roles": [
+                                      {
+                                        "Ref": "frontendpipelineBuildCodePipelineActionRoleA39AF7CA"
+                                      }
+                                    ]
+                                  }
+                                },
+                                "constructInfo": {
+                                  "fqn": "@aws-cdk/aws-iam.CfnPolicy",
+                                  "version": "1.90.1"
+                                }
+                              }
+                            },
+                            "constructInfo": {
+                              "fqn": "@aws-cdk/aws-iam.Policy",
+                              "version": "1.90.1"
+                            }
+                          }
+                        },
+                        "constructInfo": {
+                          "fqn": "@aws-cdk/aws-iam.Role",
+                          "version": "1.90.1"
+                        }
+                      }
+                    },
+                    "constructInfo": {
+                      "fqn": "@aws-cdk/core.Construct",
+                      "version": "1.90.1"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/core.Construct",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-codepipeline.Pipeline",
+              "version": "1.90.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "frontend-pipeline-stack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "frontend-pipeline-stack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "@aws-cdk/core.CfnResource",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.Construct",
+              "version": "1.90.1"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "@aws-cdk/core.Stack",
+          "version": "1.90.1"
+        }
       }
     },
     "constructInfo": {
