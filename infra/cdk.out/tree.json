@@ -110,6 +110,7 @@
                   "aws:cdk:cloudformation:type": "AWS::S3::Bucket",
                   "aws:cdk:cloudformation:props": {
                     "accessControl": "BucketOwnerFullControl",
+                    "bucketName": "example.manrodri.com",
                     "websiteConfiguration": {
                       "indexDocument": "index.html",
                       "errorDocument": "error.html"
@@ -185,6 +186,14 @@
               "version": "1.90.1"
             }
           },
+          "s3-frontend-export": {
+            "id": "s3-frontend-export",
+            "path": "s3-stack/s3-frontend-export",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.CfnOutput",
+              "version": "1.90.1"
+            }
+          },
           "frontend-bucket": {
             "id": "frontend-bucket",
             "path": "s3-stack/frontend-bucket",
@@ -210,14 +219,6 @@
             },
             "constructInfo": {
               "fqn": "@aws-cdk/aws-ssm.StringParameter",
-              "version": "1.90.1"
-            }
-          },
-          "frontend-bucket-export": {
-            "id": "frontend-bucket-export",
-            "path": "s3-stack/frontend-bucket-export",
-            "constructInfo": {
-              "fqn": "@aws-cdk/core.CfnOutput",
               "version": "1.90.1"
             }
           },
@@ -257,17 +258,25 @@
         "id": "frontend-pipeline-stack",
         "path": "frontend-pipeline-stack",
         "children": {
-          "webhosting-id": {
-            "id": "webhosting-id",
-            "path": "frontend-pipeline-stack/webhosting-id",
+          "artifact-bucket-id": {
+            "id": "artifact-bucket-id",
+            "path": "frontend-pipeline-stack/artifact-bucket-id",
             "constructInfo": {
               "fqn": "@aws-cdk/core.Resource",
               "version": "1.90.1"
             }
           },
-          "artifact-bucket-id": {
-            "id": "artifact-bucket-id",
-            "path": "frontend-pipeline-stack/artifact-bucket-id",
+          "bucket-id.Parameter": {
+            "id": "bucket-id.Parameter",
+            "path": "frontend-pipeline-stack/bucket-id.Parameter",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.CfnParameter",
+              "version": "1.90.1"
+            }
+          },
+          "bucket-id": {
+            "id": "bucket-id",
+            "path": "frontend-pipeline-stack/bucket-id",
             "constructInfo": {
               "fqn": "@aws-cdk/core.Resource",
               "version": "1.90.1"
@@ -507,18 +516,7 @@
                     },
                     "source": {
                       "type": "CODEPIPELINE",
-                      "buildSpec": {
-                        "Fn::Join": [
-                          "",
-                          [
-                            "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"pre_build\": {\n      \"commands\": [\n        \"echo Deployment started on `date`\",\n        \"echo Synching S3 Content\",\n        \"aws s3 sync ./web/ s3://",
-                            {
-                              "Fn::ImportValue": "frontend-bucket"
-                            },
-                            "\"\n      ]\n    },\n    \"build\": {\n      \"commands\": [\n        \"echo Invalidating CloudFront Cache\"\n      ]\n    },\n    \"post_build\": {\n      \"commands\": [\n        \"echo Deployment completed on  `date`\"\n      ]\n    }\n  },\n  \"artifacts\": {\n    \"files\": [\n      \"**/*\"\n    ]\n  }\n}"
-                          ]
-                        ]
-                      }
+                      "buildSpec": "{\n  \"version\": \"0.2\",\n  \"phases\": {\n    \"pre_build\": {\n      \"commands\": [\n        \"echo Deployment started on `date`\",\n        \"echo Synching S3 Content\",\n        \"aws s3 sync ./web/ s3://<jsii._reference_map.InterfaceDynamicProxy object at 0x10dc97d68>\"\n      ]\n    },\n    \"build\": {\n      \"commands\": [\n        \"echo Invalidating CloudFront Cache\"\n      ]\n    },\n    \"post_build\": {\n      \"commands\": [\n        \"echo Deployment completed on  `date`\"\n      ]\n    }\n  },\n  \"artifacts\": {\n    \"files\": [\n      \"**/*\"\n    ]\n  }\n}"
                     },
                     "description": "frontend project for SPA",
                     "encryptionKey": "alias/aws/s3",
@@ -935,6 +933,122 @@
               "Default": {
                 "id": "Default",
                 "path": "frontend-pipeline-stack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "@aws-cdk/core.CfnResource",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.Construct",
+              "version": "1.90.1"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "@aws-cdk/core.Stack",
+          "version": "1.90.1"
+        }
+      },
+      "dns-stack": {
+        "id": "dns-stack",
+        "path": "dns-stack",
+        "children": {
+          "bucket-id.Parameter": {
+            "id": "bucket-id.Parameter",
+            "path": "dns-stack/bucket-id.Parameter",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.CfnParameter",
+              "version": "1.90.1"
+            }
+          },
+          "bucket-id": {
+            "id": "bucket-id",
+            "path": "dns-stack/bucket-id",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.Resource",
+              "version": "1.90.1"
+            }
+          },
+          "webhosting-id": {
+            "id": "webhosting-id",
+            "path": "dns-stack/webhosting-id",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.Resource",
+              "version": "1.90.1"
+            }
+          },
+          "hosted-zone-id": {
+            "id": "hosted-zone-id",
+            "path": "dns-stack/hosted-zone-id",
+            "constructInfo": {
+              "fqn": "@aws-cdk/core.Resource",
+              "version": "1.90.1"
+            }
+          },
+          "cdn-record": {
+            "id": "cdn-record",
+            "path": "dns-stack/cdn-record",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "dns-stack/cdn-record/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::Route53::RecordSet",
+                  "aws:cdk:cloudformation:props": {
+                    "name": "example.manrodri.com.",
+                    "type": "A",
+                    "aliasTarget": {
+                      "hostedZoneId": "Z1BKCTXD74EZPE",
+                      "dnsName": "s3-website-eu-west-1.amazonaws.com"
+                    },
+                    "hostedZoneId": "Z06169321YROCWIH3JLEM"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-route53.CfnRecordSet",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-route53.ARecord",
+              "version": "1.90.1"
+            }
+          },
+          "zone-id": {
+            "id": "zone-id",
+            "path": "dns-stack/zone-id",
+            "children": {
+              "Resource": {
+                "id": "Resource",
+                "path": "dns-stack/zone-id/Resource",
+                "attributes": {
+                  "aws:cdk:cloudformation:type": "AWS::SSM::Parameter",
+                  "aws:cdk:cloudformation:props": {
+                    "type": "String",
+                    "value": "Z06169321YROCWIH3JLEM",
+                    "name": "/dev/zone-id"
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "@aws-cdk/aws-ssm.CfnParameter",
+                  "version": "1.90.1"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "@aws-cdk/aws-ssm.StringParameter",
+              "version": "1.90.1"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "dns-stack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "dns-stack/CDKMetadata/Default",
                 "constructInfo": {
                   "fqn": "@aws-cdk/core.CfnResource",
                   "version": "1.90.1"

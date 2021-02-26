@@ -12,7 +12,7 @@ from aws_cdk import (
 
 class CodePipelineFrontendStack(core.Stack):
 
-    def __init__(self, scope: core.Construct, id: str, webhostingbucket, artifactbucket, **kwargs) -> None:
+    def __init__(self, scope: core.Construct, id: str , artifactbucket, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         prj_name = self.node.try_get_context("project_name")
@@ -22,9 +22,8 @@ class CodePipelineFrontendStack(core.Stack):
             secret_id=f'{env_name}/github-token', json_field='github-token'
         )
 
-        webhosting_bucket = s3.Bucket.from_bucket_name(self, 'webhosting-id', bucket_name=webhostingbucket)
         artifact_bucket = s3.Bucket.from_bucket_name(self, 'artifact-bucket-id', bucket_name=artifactbucket)
-
+        frontend_bucket_name = ssm.StringParameter.from_string_parameter_name(self, 'bucket-id',f"/{env_name}/frontend-bucket-name")
         # cdn_id = ssm.StringParameter.from_string_parameter_name(self, 'cdnid',
         #                                                         string_parameter_name=f'/{env_name}/cdn-id')
         # source_repo = ccm.Repository.from_repository_name(self, 'repoid', repository_name='cdk_app_frontend')
@@ -44,7 +43,7 @@ class CodePipelineFrontendStack(core.Stack):
                                                        'commands': [
                                                            'echo Deployment started on `date`',
                                                            'echo Synching S3 Content',
-                                                           f'aws s3 sync ./web/ s3://{webhosting_bucket.bucket_name}'
+                                                           f'aws s3 sync ./web/ s3://{frontend_bucket_name}'
 
                                                        ]
                                                    },

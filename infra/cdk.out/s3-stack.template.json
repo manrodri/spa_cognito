@@ -43,6 +43,7 @@
       "Type": "AWS::S3::Bucket",
       "Properties": {
         "AccessControl": "BucketOwnerFullControl",
+        "BucketName": "example.manrodri.com",
         "WebsiteConfiguration": {
           "ErrorDocument": "error.html",
           "IndexDocument": "index.html"
@@ -122,7 +123,7 @@
         "Name": "build-artifacts-bucket"
       }
     },
-    "frontendbucketexport": {
+    "s3frontendexport": {
       "Value": {
         "Ref": "frontend0151CE44"
       },

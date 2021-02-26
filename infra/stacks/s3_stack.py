@@ -34,22 +34,25 @@ class S3Stack(core.Stack):
                             parameter_name=f"/{env_name}/artifacts-bucket-name",
                             string_value=artifacts_bucket.bucket_name)
 
+
         # frontend bucket
         frontend_bucket = s3.Bucket(self, 'frontend',
                                      access_control=s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
+                                     bucket_name='example.manrodri.com',
                                      public_read_access=True,
                                      website_index_document='index.html',
                                      website_error_document='error.html',
                                      removal_policy=core.RemovalPolicy.DESTROY
                                      )
 
+        core.CfnOutput(self, 's3-frontend-export',
+                       value=frontend_bucket.bucket_name,
+                       export_name='frontend-bucket')
+
+
         ssm.StringParameter(self, 'frontend-bucket',
                             parameter_name=f"/{env_name}/frontend-bucket-name",
                             string_value=frontend_bucket.bucket_name)
-
-        core.CfnOutput(self, 'frontend-bucket-export',
-                       value=frontend_bucket.bucket_name,
-                       export_name='frontend-bucket')
 
 
 
